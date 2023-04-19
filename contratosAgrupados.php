@@ -25,15 +25,7 @@ inner join Tb_convenio conv1 on conv1.codigo = cs1.convenio
 inner join Tb_banco bc1 on bc1.codigo = conv1.banco
 where bc1.nome = bc.nome and conv1.verba = conv.verba order by cntt.data_inclusao asc limit 1    
 ) as 'MaisAntigo'
-,
-(
-SELECT sum(cntt.valor)
-FROM `Tb_contrato` cntt
-inner join Tb_convenio_servico cs1 on cs1.codigo = cntt.convenio_servico
-inner join Tb_convenio conv1 on conv1.codigo = cs1.convenio
-inner join Tb_banco bc1 on bc1.codigo = conv1.banco
-where bc1.nome = bc.nome and conv1.verba = conv.verba group by bc1.nome, conv1.verba    
-) as 'soma'
+, sum(contrato.valor) as 'soma'
 FROM `Tb_contrato` contrato 
 inner join Tb_convenio_servico cs on cs.codigo = contrato.convenio_servico
 inner join Tb_convenio conv on conv.codigo = cs.convenio
